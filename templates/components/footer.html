@@ -1,41 +1,47 @@
 <style>
-  .footer {
-    padding: 20px;
-    margin-top: 39px;
-  }
-  .global_footer {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    padding: 14px 0px;
-    font-size: 90%;
-  }
+.footer_content {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+.global_footer {
+  align-items: center;
+  display: flex;
+  padding: 14px 0px;
+  font-size: 90%;
+  justify-content: center;
+}
 
-  .footer-rows {
-    display: flex;
-    justify-content: space-between;
-  }
-  .footer-rows ul {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-  }
-  .social_media {
-    display: flex;
-    flex-direction: column;
-    padding-right: 38px;
-    list-style-type: none;
-    text-decoration: none;
-  }
+.footer-rows {
+  display: flex !important;
+   list-style-type: none;
+}
+.footer-box1 {
+    padding-right:45px;
+
+}
+.footer-box1 ul {
+ 
+  padding: 0px;
+  margin: 0px;
+}
+
+.social_media {
+  display: flex;
+  flex-direction: column;
+  padding-right: 38px;
+  text-decoration: none;
+  list-style-type:none;
+  list-style:none;
+}
 </style>
 <footer class="footer">
-  <div class="content">
+  <div class="footer_content">
         <!--<span>{{ appName() }} <strong>v{{ appVersion() }}</strong></span>-->
     <div class="global_footer">
       <div class="footer-rows">
         <div class="footer-box1">
           <span class="footer-title" style="font-size: 24px">Help</span>
-          <ul>
+          <ul style="list-style-type:none;">
             <li>
              <a href="#">FAQ</a>
             </li>
@@ -52,12 +58,12 @@
           <span class="footer-title" style="font-size: 24px">Socials</span>
           <ul>
             <li>
-              <a class="foot-link" href="https://discord.gg/csPH568hsJ"
+              <a class="foot-link" href="/discord"
                 ><i class="fab fa-discord"></i> Discord</a
               >
             </li>
             <li>
-              <a class="foot-link" href="https://github.com/Osu-Private-Server"
+              <a class="foot-link" href="/github"
                 ><i class="fab fa-github"></i> GitHub</a
               >
             </li>
@@ -73,6 +79,10 @@
         >-->
           </ul>
         </div>
+        <!-- <div class="footer-box1">
+            <img src="http://s05.flagcounter.com/count/QBT/bg_000000/txt_22B7DB/border_CCCCCC/columns_9/maxflags_300/viewers_0/labels_0/pageviews_1/flags_1/" /><a href="https://info.flagcounter.com/AyNK"></a>
+
+        </div> -->
       </div>
     </div>
   </div>
