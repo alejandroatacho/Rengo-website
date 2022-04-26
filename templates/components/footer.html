@@ -1,21 +1,80 @@
+<style>
+  .footer {
+    padding: 20px;
+    margin-top: 39px;
+  }
+  .global_footer {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 0px;
+    font-size: 90%;
+  }
+
+  .footer-rows {
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer-rows ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  .social_media {
+    display: flex;
+    flex-direction: column;
+    padding-right: 38px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+</style>
 <footer class="footer">
   <div class="content">
-    <span>{{ appName() }} <strong>v{{ appVersion() }}</strong></span>
-    <a class="foot-link" href="https://github.com/Osu-Private-Server"
-      ><i class="fab fa-github"></i> GitHub</a
-    >
-    <a class="foot-link" href="https://discord.gg/csPH568hsJ"
-      ><i class="fab fa-discord"></i> Discord</a
-    >
-    <!--
-    <a class="foot-link" href="/youtube"
-      ><i class="fab fa-youtube"></i> YouTube</a
-    >
-    <a class="foot-link" href="/twitter"
-      ><i class="fab fa-twitter"></i> Twitter</a
-    >
-    <a class="foot-link" href="/instagram"
-      ><i class="fab fa-instagram"></i> Instagram</a
-    >-->
+        <!--<span>{{ appName() }} <strong>v{{ appVersion() }}</strong></span>-->
+    <div class="global_footer">
+      <div class="footer-rows">
+        <div class="footer-box1">
+          <span class="footer-title" style="font-size: 24px">Help</span>
+          <ul>
+            <li>
+             <a href="#">FAQ</a>
+            </li>
+            <li>
+             <a href="#">Rules</a>
+            </li>
+            <li>
+             <a href="#">How to connect</a>
+            </li>
+            
+        
+        </div>
+        <div class="social_media">
+          <span class="footer-title" style="font-size: 24px">Socials</span>
+          <ul>
+            <li>
+              <a class="foot-link" href="https://discord.gg/csPH568hsJ"
+                ><i class="fab fa-discord"></i> Discord</a
+              >
+            </li>
+            <li>
+              <a class="foot-link" href="https://github.com/Osu-Private-Server"
+                ><i class="fab fa-github"></i> GitHub</a
+              >
+            </li>
+            <!--
+        <a class="foot-link" href="/youtube"
+        ><i class="fab fa-youtube"></i> YouTube</a
+        >
+        <a class="foot-link" href="/twitter"
+        ><i class="fab fa-twitter"></i> Twitter</a
+        >
+        <a class="foot-link" href="/instagram"
+        ><i class="fab fa-instagram"></i> Instagram</a
+        >-->
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="outer-footer"></div>
 </footer>

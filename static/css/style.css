@@ -19,11 +19,12 @@ html {
   min-height: 100%;
 }
 
+/*Footer CSS*/
 .footer {
   padding: 20px;
   margin-top: 39px;
 }
-
+/*END*/
 .main-block {
   width: inherit;
   background: hsl(var(--main), 10%, 15%);
