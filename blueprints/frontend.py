@@ -554,6 +554,10 @@ async def register_post():
     # user has successfully registered
     return await render_template('verify.html')
 
+@frontend.route('/rules')
+async def rules():
+    return await render_template('rules.html')
+
 @frontend.route('/logout')
 async def logout():
     if 'authenticated' not in session:
