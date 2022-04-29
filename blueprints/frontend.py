@@ -558,6 +558,10 @@ async def register_post():
 async def rules():
     return await render_template('rules.html')
 
+@frontend.route('/staff')
+async def staff():
+    return await render_template('staff.html')
+
 @frontend.route('/logout')
 async def logout():
     if 'authenticated' not in session:
@@ -597,6 +601,10 @@ async def twitter_redirect():
 @frontend.route('/ig')
 async def instagram_redirect():
     return redirect(glob.config.instagram)
+
+@frontend.route('/lionz')
+async def lionz_redirect():
+    return redirect(glob.config.lionz)
 
 # profile customisation
 BANNERS_PATH = Path.cwd() / '.data/banners'
