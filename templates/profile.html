@@ -20,11 +20,11 @@
                     <div class="map-title-block">
                         <div class="map-title">
                             <a class="beatmap-link">
-                                <% map.beatmap.artist %> - <% map.beatmap.title %> [<% map.beatmap.version %>] <!--<span v-if="map.mods != 0">+ <% modsStr(map.mods) %></span>-->
+                                <% map.beatmap.artist %> - <% map.beatmap.title %> [<% map.beatmap.version %>] 
                             </a>
                         </div>
                         <div class="play-stats">
-                            <% addCommas(map.score) %> - <% map.max_combo %>/<% map.beatmap.max_combo %><b>x</b>
+                            <% addCommas(map.score) %> - <% map.max_combo %>/<% map.beatmap.max_combo %><b>x</b> <span v-if="map.mods != 0">+ <% modsStr(map.mods) %></span>
                         </div>
                         <div class="map-date">
                             <time>
@@ -352,7 +352,7 @@
 {% endblock %}
 
 {% block bottom %}
-<script src="/static/js/pages/profile.js"></script>
+<script src="/static/js/pages/profile.js?1"></script>
 {% if user['customisation']['banner'] == True or user['customisation']['background'] == True %}
 <style>
     {% if user['customisation']['banner'] == True %}
