@@ -203,6 +203,7 @@
             <div class="bar-selection badge-selects">
                 <span>
                     <span v-if="{{ user['id'] }} == 4" style="font-size: 16; color: fuchsia;" title="Rengo Developer"><i class="fa-solid fa-code"></i>  developer</span>
+                    <span v-if="{{ user['id'] }} == 3" style="font-size: 16; color: #cb626e;" title="Rengo Owner"><i class="fa-solid fa-crown"></i>  owner</span>
                 </span>
             </div>
         </div>
@@ -222,7 +223,7 @@
                                 <td>Global rank</td>
                                 <td class="right-aligned">
                                     <span id="global-rank">
-                                        <% '#' + data.stats[`rank_global_${modegulag}`] %>
+                                        <% '#' + data.stats.out[modegulag].rank %>
                                     </span>
                                 </td>
                             </tr>
@@ -230,7 +231,7 @@
                                 <td>Country rank</td>
                                 <td class="right-aligned">
                                     <span id="country-rank">
-                                        <% '#' + data.stats[`rank_country_${modegulag}`] %>
+                                        <% '#' + data.stats.out[modegulag].country_rank %>
                                     </span>
                                 </td>
                             </tr>
