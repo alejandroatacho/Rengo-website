@@ -247,6 +247,18 @@
                     <table class="is-striped">
                         <tbody>
                             <tr>
+                                <td><b>Global rank</b></td>
+                                <td class="right-aligned">
+                                    <% '#' + data.stats.out[modegulag].rank %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Country rank</b></td>
+                                <td class="right-aligned">
+                                    <% '#' + data.stats.out[modegulag].country_rank %>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td><b>PP</b></td>
                                 <td class="right-aligned">
                                     <% addCommas(data.stats.out[modegulag].pp) %>
