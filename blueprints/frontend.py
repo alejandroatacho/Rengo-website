@@ -6,6 +6,7 @@ import bcrypt
 import hashlib
 import os
 import time
+import timeago
 
 from cmyui.logging import Ansi
 from cmyui.logging import log
@@ -15,6 +16,7 @@ from pathlib import Path
 from quart import Blueprint
 from quart import redirect
 from quart import render_template
+from datetime import datetime
 from quart import request
 from quart import session
 from quart import send_file
@@ -53,6 +55,7 @@ async def home_account_edit():
 @login_required
 async def settings_profile():
     return await render_template('settings/profile.html')
+    
 
 @frontend.route('/settings/profile', methods=['POST'])
 @login_required
@@ -222,6 +225,14 @@ async def settings_custom_post():
 async def settings_password():
     return await render_template('settings/password.html')
 
+@frontend.route('/rules')
+async def rules():
+    return await render_template('rules.html')
+
+@frontend.route('/staff')
+async def staff():
+    return await render_template('staff.html')
+
 @frontend.route('/settings/password', methods=["POST"])
 @login_required
 async def settings_password_post():
@@ -304,10 +315,10 @@ async def profile_select(id):
     mode = request.args.get('mode', 'std', type=str) # 1. key 2. default value
     mods = request.args.get('mods', 'vn', type=str)
     user_data = await glob.db.fetch(
-        'SELECT name, safe_name, id, priv, country '
+        'SELECT name, safe_name, id, priv, country, clan_id, creation_time, latest_activity '
         'FROM users '
-        'WHERE safe_name = %s OR id = %s LIMIT 1',
-        [utils.get_safe_name(id), id]
+        'WHERE safe_name IN (%s) OR id IN (%s) LIMIT 1',
+        [id, utils.get_safe_name(id)]
     )
 
     # no user
@@ -324,9 +335,10 @@ async def profile_select(id):
     is_staff = 'authenticated' in session and session['user_data']['is_staff']
     if not user_data or not (user_data['priv'] & Privileges.Normal or is_staff):
         return (await render_template('404.html'), 404)
-
+    user_data['creation_time'] = datetime.fromtimestamp(float(user_data['creation_time']))
+    user_data['latest_activity'] = datetime.fromtimestamp(float(user_data['latest_activity']))
     user_data['customisation'] = utils.has_profile_customizations(user_data['id'])
-    return await render_template('profile.html', user=user_data, mode=mode, mods=mods)
+    return await render_template('profile.html', user=user_data, mode=mode, mods=mods, datetime=datetime, timeago=timeago)
 
 
 @frontend.route('/leaderboard')
@@ -554,14 +566,6 @@ async def register_post():
     # user has successfully registered
     return await render_template('verify.html')
 
-@frontend.route('/rules')
-async def rules():
-    return await render_template('rules.html')
-
-@frontend.route('/staff')
-async def staff():
-    return await render_template('staff.html')
-
 @frontend.route('/logout')
 async def logout():
     if 'authenticated' not in session:
@@ -597,14 +601,14 @@ async def youtube_redirect():
 async def twitter_redirect():
     return redirect(glob.config.twitter)
 
+@frontend.route('/website')
+async def website():
+    return redirect(glob.config.website)
+
 @frontend.route('/instagram')
 @frontend.route('/ig')
 async def instagram_redirect():
     return redirect(glob.config.instagram)
-
-@frontend.route('/lionz')
-async def lionz_redirect():
-    return redirect(glob.config.lionz)
 
 # profile customisation
 BANNERS_PATH = Path.cwd() / '.data/banners'
