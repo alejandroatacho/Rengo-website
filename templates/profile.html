@@ -23,12 +23,12 @@
                                 <% map.beatmap.artist %> - <% map.beatmap.title %> [<% map.beatmap.version %>] 
                             </a>
                         </div>
-                        <div class="map-title">
-                            <% addCommas(map.score) %> - <% map.max_combo %>/<% map.beatmap.max_combo %><b>x</b> <span style="color: rgb(255, 93, 255)" v-if="map.mods != 0">+<% modsStr(map.mods) %></span>
+                        <div class="play-stats">
+                            <% addCommas(map.score) %> - <% map.max_combo %>/<% map.beatmap.max_combo %><b>x</b> <span v-if="map.mods != 0">+ <% modsStr(map.mods) %></span>
                         </div>
                         <div class="map-date">
                             <time>
-                                <% timeago.format(map.play_time + ' UTC-0') %> <i><a v-if="map.grade != 'F'" :href="map.replayurl" class="fas fa-download"></a></i>
+                                <% timeago.format(map.play_time + ' UTC-0') %>
                             </time>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                     <div class="d-flex align-items-baseline"><span>
                             <% map.plays %>
                         </span>
-                        <div href="https://osu.ppy.sh/beatmaps/${map.set_id}/" class="target-button newmaps-color"><i class="fas fa-arrow-right"></i>
+                        <div class="target-button newmaps-color"><i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
                 </div>
@@ -117,6 +117,7 @@
         </div>
     </div>
     <div v-if="data.maps.{{ id }}.more.full == false" class="extra-block">
+        <a class="show-button" @click="AddLimit('mostplay')">Show more</a>
     </div>
 </div>
 {% endmacro %}
@@ -125,7 +126,7 @@
 <script src="/static/js/asserts/vue.js"></script>
 <script src="/static/js/asserts/vue-axios.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js"></script>
-<link rel="stylesheet" href="/static/css/pages/profile.css?3">
+<link rel="stylesheet" href="/static/css/pages/profile.css">
 
 <script>
     var userid = Number("{{ user['id'] }}"); //For text editor doesn't dizzy lmao
@@ -133,7 +134,6 @@
     var mods = '{{ mods }}';
     var domain = "{{ domain() }}";
 </script>
-<style>html {--main: 300;}</style>
 {% endblock %}
 
 {% block content %}
@@ -145,10 +145,6 @@
                     <p class="ranks">
                         <img src="/static/images/flags/{{ user['country']|upper }}.png" class="profile-flag">
                         <span class="bgf">{{ user['name'] }}</span>
-                        <img v-if="{{ user['id'] }} == 3" src="https://i.imgur.com/rvkCcfp.png" title="Lionz Owner"/>
-                        <img v-if="{{ user['id'] }} == 3" src="https://i.imgur.com/hlbsaVz.png" title="Lionz Developer"/>
-                        <img v-if="{{ user['id'] }} == 3" src="https://i.imgur.com/FJPjCrS.png" title="Lionz Beatmap Nominator"/>
-                        <img v-if="{{ user['id'] }} == 5" src="https://i.imgur.com/FJPjCrS.png" title="Lionz Beatmap Nominator"/>
                     </p>
                 </h1>
                 <transition name="fade">
@@ -206,13 +202,8 @@
             </div>
             <div class="bar-selection badge-selects">
                 <span>
-                    <span v-if="{{ user['id'] }} == 3" style="font-size: 16; color: #28a40c;" title="Verified Legit Player"><i class="fas fa-check"></i>  verified</span><span>&nbsp;&nbsp;&nbsp;</span><span v-if="{{ user['id'] }} == 3" style="font-size: 16; color:fuchsia;" title="Certified Cutie"><i class="fa-regular fa-heart"></i>  cutie</span><span>&nbsp;&nbsp;&nbsp;</span><span v-if="{{ user['id'] }} == 3" style="font-size: 16; color: fuchsia;" title="Lionz Developer"><i class="fa-solid fa-code"></i>  developer</span>
-                    <span v-if="{{ user['id'] }} == 6" style="font-size: 16; color: #28a40c;" title="Verified Legit Player"><i class="fas fa-check"></i>  verified</span>
-                    <span v-if="{{ user['id'] }} == 14" style="font-size: 16; color:fuchsia;" title="Certified Cutie"><i class="fa-regular fa-heart"></i>  cutie</span>
-                    <span v-if="{{ user['id'] }} == 5" style="font-size: 16; color: #28a40c;" title="Verified Legit Player"><i class="fas fa-check"></i>  verified</span><span>&nbsp;&nbsp;&nbsp;</span><span v-if="{{ user['id'] }} == 5" style="font-size: 16; color:fuchsia;" title="Certified Cutie"><i class="fa-regular fa-heart"></i>  cutie</span>
-                    <span v-if="{{ user['id'] }} == 6" style="font-size: 16; color:fuchsia;" title="Certified Cutie"><i class="fa-regular fa-heart"></i>  cutie</span>
-                    <span v-if="{{ user['id'] }} == 7" style="font-size: 16; color:fuchsia;" title="Certified Cutie"><i class="fa-regular fa-heart"></i>  cutie</span>
-                    <span v-if="{{ user['id'] }} == 4" style="font-size: 16; color: #28a40c;" title="Verified Legit Player"><i class="fas fa-check"></i>  verified</span>
+                    <span v-if="{{ user['id'] }} == 4" style="font-size: 16; color: fuchsia;" title="Rengo Developer"><i class="fa-solid fa-code"></i>  developer</span>
+                    <span v-if="{{ user['id'] }} == 3" style="font-size: 16; color: #cb626e;" title="Rengo Owner"><i class="fa-solid fa-crown"></i>  owner</span>
                 </span>
             </div>
         </div>
@@ -220,7 +211,7 @@
     <div class="second-block">
         <div class="columns is-marginless two-sides">
             <div class="column is-one-third" v-cloak>
-                <div class="header" v-if='data.stats[`rank_global_${modegulag}`] != -1'>
+                <!--<div class="header" v-if='data.stats[`rank_global_${modegulag}`] != -1'>
                     <div class="title">
                         <i class="fas fa-user-friends"></i> Rank
                     </div>
@@ -246,7 +237,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>-->
                 <div class="header">
                     <div class="title">
                         <i class="fas fa-chart-pie"></i> Statistics
@@ -255,6 +246,18 @@
                 <div class="stats-block">
                     <table class="is-striped">
                         <tbody>
+                            <tr>
+                                <td><b>Global rank</b></td>
+                                <td class="right-aligned">
+                                    <% '#' + data.stats.out[modegulag].rank %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Country rank</b></td>
+                                <td class="right-aligned">
+                                    <% '#' + data.stats.out[modegulag].country_rank %>
+                                </td>
+                            </tr>
                             <tr>
                                 <td><b>PP</b></td>
                                 <td class="right-aligned">
@@ -334,13 +337,9 @@
                                         <div class="rank-amount">
                                             <% data.stats.out[modegulag].a_count %>
                                         </div>
-                                        
-                                        
                                     </div>
-                                    
                                 </div>
                             </div>
-                            
                         </article>
                     </div>
                 </div>
