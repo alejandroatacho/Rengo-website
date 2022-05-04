@@ -16,6 +16,7 @@ from pathlib import Path
 from quart import Blueprint
 from quart import redirect
 from quart import render_template
+from datetime import datetime
 from quart import request
 from quart import session
 from quart import send_file
@@ -325,7 +326,8 @@ async def profile_select(id):
     is_staff = 'authenticated' in session and session['user_data']['is_staff']
     if not user_data or not (user_data['priv'] & Privileges.Normal or is_staff):
         return (await render_template('404.html'), 404)
-
+    user_data['creation_time'] = datetime.fromtimestamp(float(user_data['creation_time']))
+    user_data['latest_activity'] = datetime.fromtimestamp(float(user_data['latest_activity']))
     user_data['customisation'] = utils.has_profile_customizations(user_data['id'])
     return await render_template('profile.html', user=user_data, mode=mode, mods=mods, datetime=datetime, timeago=timeago)
 
